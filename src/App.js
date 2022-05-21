@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styled from 'styled-components'
-import { CirclesWithBar } from 'react-loader-spinner'
+import { Audio } from 'react-loader-spinner'
 
 
 const API_ENDPOINT = process.env.REACT_APP_BACKEND
@@ -82,7 +82,7 @@ const App = () => {
 
   return (
     <>
-      <Container>
+      <Container loading={loading}>
         <h2>Video to Audio Converter</h2>
         <h4>{date.toDateString()}</h4>
         <p>This is a very fast and efficient video to audio
@@ -99,7 +99,7 @@ const App = () => {
           {audioFiles ? audioFiles.map((el, idx) => <a key={idx} href={el.file} download>File {idx + 1}</a>) : null}
         </AudioFiles>
         {loading && <h3><i>Converting...</i> </h3>}
-        {loading && <CirclesWithBar color="blue" ariaLabel="circles-with-indicator" />}
+        {loading && <Audio heigth="100" width="100" color="#023e8a" ariaLabel="loading" />}
       </Container>
       <ToastContainer />
     </>
@@ -127,10 +127,10 @@ const Container = styled.div`
     padding: 10px;
     margin-left: 3rem;
     font-size: 1.5rem;
-    background-color: #0a9396;
-    color: white;
+    background-color: ${({ loading }) => loading ? `transparent` : '#0a9396'};
+    color: ${({ loading }) => loading ? `black` : 'white'}; ;
     border-radius: 0.4rem;
-    border: transparent;
+    border: ${({ loading }) => loading ? `1px solid #0a9396` : 'transparent'}; ;
     transition: all 400ms ease;
     cursor: pointer;
     :hover {
